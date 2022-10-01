@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 # define a video capture object
-face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("AutoBlurFace/haarcascade_frontalface_default.xml")
 vid = cv2.VideoCapture(0)
 
 
