@@ -2,9 +2,11 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 
+# min of f(x) = x1 ^ 2  + x2 ^ 2
+
 
 def generate_value():
-    return random.randint(0, 1)
+    return random.randint(-1000000, 1000000)
 
 
 def generate_vector(n):
@@ -20,7 +22,7 @@ def generate_population(n, m):
 
 
 def fitness_function(vector):
-    return sum(vector)
+    return sum(gen * gen for gen in vector)
 
 
 def selection(sorted_population):
@@ -29,7 +31,7 @@ def selection(sorted_population):
         index2 = random.randint(0, len(sorted_population) - 1)
         if index1 != index2:
             break
-    return sorted_population[index2] if index2 > index1 else sorted_population[index1]
+    return sorted_population[index2] if index2 < index1 else sorted_population[index1]
 
 
 def crossover(chromosome1, chromosome2, crossover_rate=0.9):
@@ -52,16 +54,14 @@ def mutation(chromosome, mutation_rate=0.05):
 
 
 if __name__ == "__main__":
-
-    # generate population with 20 chromosomes
-    population = generate_population(20, 20)
+    population = generate_population(2, 2000)
     fitnesses = []
-    for i in range(50):
+    for i in range(100):
         sorted_population = sorted(population, key=fitness_function)
-        fitnesses.append(fitness_function(sorted_population[-1]))
+        fitnesses.append(fitness_function(sorted_population[0]))
         # take two best chromosome of old population
         # elitism
-        the_best_two = sorted_population[-2:]
+        the_best_two = sorted_population[:2]
 
         new_population = []
         for chromosome in the_best_two:
@@ -82,6 +82,6 @@ if __name__ == "__main__":
             new_population.append(chromosome2)
         population = new_population
 
-    x = np.arange(50)
+    x = np.arange(100)
     plt.plot(x, fitnesses)
     plt.show()
