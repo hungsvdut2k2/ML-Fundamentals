@@ -59,9 +59,14 @@ if __name__ == "__main__":
     for i in range(50):
         sorted_population = sorted(population, key=fitness_function)
         fitnesses.append(fitness_function(sorted_population[-1]))
+        # take two best chromosome of old population
+        # elitism
+        the_best_two = sorted_population[-2:]
 
         new_population = []
-        while len(new_population) < 20:
+        for chromosome in the_best_two:
+            new_population.append(chromosome)
+        while len(new_population) < 18:
             # selection
             chromosome1 = selection(sorted_population)
             chromosome2 = selection(sorted_population)
